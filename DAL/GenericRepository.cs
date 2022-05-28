@@ -1,4 +1,5 @@
-﻿using DAL.Interfaces;
+﻿using DAL.Context;
+using DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -16,7 +17,10 @@ namespace DAL
 
         public async Task<T?> GetAsync(Expression<Func<T, bool>> predicate)
             => await _db.Set<T>().AsNoTracking().Where(predicate).FirstOrDefaultAsync();
-         
+
+        public async Task<List<T>?> GetAllAsync(Expression<Func<T, bool>> predicate)
+            => await _db.Set<T>().AsNoTracking().Where(predicate).ToListAsync();
+
         public async void Insert(T entity)
         {
             _db.Set<T>().Add(entity);

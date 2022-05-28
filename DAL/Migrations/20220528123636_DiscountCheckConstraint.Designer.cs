@@ -13,8 +13,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220528065053_PromocodesDiscount")]
-    partial class PromocodesDiscount
+    [Migration("20220528123636_DiscountCheckConstraint")]
+    partial class DiscountCheckConstraint
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -106,8 +106,8 @@ namespace DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("Discount")
-                        .HasColumnType("int");
+                    b.Property<double?>("Discount")
+                        .HasColumnType("float");
 
                     b.Property<bool>("IsForSale")
                         .HasColumnType("bit");

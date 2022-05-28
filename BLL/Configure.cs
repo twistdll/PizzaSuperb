@@ -9,6 +9,7 @@ namespace BLL
         public static void AddBLL(this IServiceCollection services, string connectionString)
         {
             services.AddScoped<IUnitOfWork>(_ => new UnitOfWork(connectionString));
+            services.AddAutoMapper(typeof(Configure).Assembly);
         }
     }
 }

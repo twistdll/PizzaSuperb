@@ -1,5 +1,4 @@
-﻿using DAL.Interfaces;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace PizzaSuperb.Controllers
 {

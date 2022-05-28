@@ -9,7 +9,9 @@ namespace DAL.Entities
 
         public string Name { get; set; }
         public int Price { get; set; }
-        public int? Discount { get; set; }
+
+        [Range(0, 0.99)]
+        public double? Discount { get; set; }
         public bool IsForSale { get; set; }
 
         public List<OrderConfiguration> OrderConfigurations { get; set; }
