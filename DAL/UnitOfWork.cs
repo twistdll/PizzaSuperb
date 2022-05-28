@@ -4,7 +4,7 @@ using DAL.Interfaces;
 
 namespace DAL
 {
-    internal class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private ApplicationContext _db;
         private GenericRepository<Order> _orders;

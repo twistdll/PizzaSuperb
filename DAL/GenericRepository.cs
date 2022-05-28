@@ -14,9 +14,9 @@ namespace DAL
             _db = db ?? throw new ArgumentNullException(nameof(db)); ;
         }
 
-        public async Task<T?> GetAsync(T entity, Expression<Func<T, bool>> predicate)
-            => await _db.Set<T>().AsNoTracking().FirstOrDefaultAsync(predicate);
-
+        public async Task<T?> GetAsync(Expression<Func<T, bool>> predicate)
+            => await _db.Set<T>().AsNoTracking().Where(predicate).FirstOrDefaultAsync();
+         
         public async void Insert(T entity)
         {
             _db.Set<T>().Add(entity);

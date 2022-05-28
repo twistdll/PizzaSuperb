@@ -1,10 +1,10 @@
-using DAL;
-using Microsoft.EntityFrameworkCore;
+using BLL;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var services = builder.Services;
 services.AddControllersWithViews();
+services.AddBLL(builder.Configuration.GetConnectionString("DefaultConnection"));
 
 var app = builder.Build();
 

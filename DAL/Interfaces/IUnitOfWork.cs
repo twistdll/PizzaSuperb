@@ -3,7 +3,7 @@
 
 namespace DAL.Interfaces
 {
-    internal interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork : IDisposable
     {
         IRepository<Order> Orders { get; }
         IRepository<Dopping> Doppings { get; }
