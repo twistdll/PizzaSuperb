@@ -1,6 +1,10 @@
+using DAL;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllersWithViews();
+var services = builder.Services;
+services.AddControllersWithViews();
 
 var app = builder.Build();
 

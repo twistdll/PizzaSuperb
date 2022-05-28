@@ -3,9 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PizzaSuperb", "PizzaSuperb\PizzaSuperb.csproj", "{0904D67C-71F6-4F5E-B8BA-BFDC0CD4559C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PizzaSuperb", "PizzaSuperb\PizzaSuperb.csproj", "{0904D67C-71F6-4F5E-B8BA-BFDC0CD4559C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{404B52BC-D0B4-413E-B0E1-9B81AC192D27} = {404B52BC-D0B4-413E-B0E1-9B81AC192D27}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{404B52BC-D0B4-413E-B0E1-9B81AC192D27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{404B52BC-D0B4-413E-B0E1-9B81AC192D27}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
