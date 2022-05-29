@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {
-    internal interface IBusinessServicesManager
+    public interface IBusinessServicesManager
     {
-
+        IShowcaseService ShowcaseService { get; }
     }
 }

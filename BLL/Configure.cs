@@ -1,5 +1,6 @@
 ﻿using DAL;
 using DAL.Interfaces;
+using BLL.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BLL
@@ -10,6 +11,7 @@ namespace BLL
         {
             services.AddScoped<IUnitOfWork>(_ => new UnitOfWork(connectionString));
             services.AddAutoMapper(typeof(Configure).Assembly);
+            services.AddScoped<IBusinessServicesManager, BusinessServiceManager>();
         }
     }
 }
