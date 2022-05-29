@@ -1,0 +1,10 @@
+﻿@model List<PizzaTypeDTO>
+
+<div class="products">
+    <ul>
+    @foreach(var type in Model)
+    {
+        <li>@type.Name <b>@type.Price</b> @type.DiscountedPrice</li>
+    }
+    </ul>
+</div>
