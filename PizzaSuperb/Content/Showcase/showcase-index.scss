@@ -1,0 +1,12 @@
+﻿.products {
+    font-size: 20px;
+
+    ul {
+        list-style-type: none;
+
+        li + li {
+            margin-top: 5px;
+            background-color: red;
+        }
+    }
+}
