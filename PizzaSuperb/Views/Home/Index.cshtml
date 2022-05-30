@@ -1,10 +1,42 @@
 ﻿@model List<PizzaTypeDTO>
 
-<div class="products">
-    <ul>
-    @foreach(var type in Model)
-    {
-        <li>@type.Name <b>@type.Price</b> @type.DiscountedPrice</li>
-    }
-    </ul>
+<div id="Showcase">
+    <div class="search">
+        <label>Search:</label>
+        <input id="SearchText" type="text">
+    </div>
+    <div class="products">
+        @foreach (var item in Model)
+        {
+            <div class="product col-xl-4 col-md-6 col-12">
+                <div class="product__content">
+                    <div class="photo">
+                        @if (@item.PhotoUrl != null)
+                        {
+                            <img href="@item.PhotoUrl">
+                        }
+                        else
+                        {
+                            <img src="~/img/no-image.png">
+                        }
+                    </div>
+                    <div class="price">
+                        @if (item.Price != item.DiscountedPrice)
+                        {
+                            <span class="price__value__old">@item.Price $</span>
+                        }
+                        <span class="price__value">@item.DiscountedPrice $</span>
+                    </div>
+                    <div class="title">
+                        @item.Name
+                    </div>
+                    <div class="description">
+                        @item.Description
+                    </div>
+                    <div class="add-remove-block">
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>

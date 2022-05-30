@@ -71,6 +71,20 @@ body {
             border-radius: 15px;
         }
 
+
+        @media (max-width: 356px) {
+            header {
+                .menu, .logo__header {
+                    display: none !important;
+                }
+
+                .shopping-cart {
+                    width: 100%;
+                }
+            }
+        }
+
+
         .logo {
             &__header {
                 background-image: url("https://i.dailymail.co.uk/1s/2021/09/10/16/47755677-9978109-image-m-52_1631288292428.jpg");
