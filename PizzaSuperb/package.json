@@ -5,13 +5,10 @@
   "main": "public/index.html",
   "scripts": {
     "build:sass": "node-sass --includepath scss Content/main.scss wwwroot/css/main.css",
-    "watch:sass": "onchange 'Content/*.scss' -- npm run build:sass"
+    "start": "onchange 'Content/*.scss' -- npm run build:sass"
   },
   "dependencies": {
-    "d": "^1.0.1",
     "node-sass": "^7.0.1",
-    "onchange": "^7.1.0",
-    "sass": "^1.52.1",
-    "watch": "^1.0.2"
+    "onchange": "^7.1.0"
   }
 }

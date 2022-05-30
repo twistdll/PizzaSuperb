@@ -1,8 +1,9 @@
 ﻿.products {
-    font-size: $main-font;
+    font-size: 1.5rem;
 
     ul {
         list-style-type: none;
+        padding-inline-start: 0;
 
         li + li {
             margin-top: 100px;
