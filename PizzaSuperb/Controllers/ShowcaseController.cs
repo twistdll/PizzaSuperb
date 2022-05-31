@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PizzaSuperb.Controllers
 {
-    public class HomeController : Controller
+    public class ShowcaseController : Controller
     {
         private readonly IBusinessServicesManager _bll;
 
-        public HomeController(IBusinessServicesManager bll)
+        public ShowcaseController(IBusinessServicesManager bll)
         {
             _bll = bll;
         }
@@ -15,7 +15,6 @@ namespace PizzaSuperb.Controllers
         public async Task<IActionResult> Index()
         {
             var productList = await _bll.ShowcaseService.GetSaleProducts();
-
             return View(productList);
         }
     }

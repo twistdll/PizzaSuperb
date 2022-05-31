@@ -7,6 +7,8 @@
         public string Description { get; init; }
         public string? PhotoUrl { get; init; }
         public double Price { get; init; }
-        public double DiscountedPrice { get; init; }
+
+#warning fix using this property
+        public double DiscountedPrice { get; init; } 
     }
 }
