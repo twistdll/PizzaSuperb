@@ -1,5 +1,9 @@
 ﻿html {
     font-size: $defaultFontSize;
+
+    @media (max-width: 390px) {
+        font-size: $mobileFontSize;
+    }
 }
 
 body {
@@ -31,6 +35,10 @@ body {
                 padding: 0.3rem;
                 margin: 0px;
                 height: 100%;
+
+                @media (max-width: 390px) {
+                    padding: 0.1rem;
+                }
             }
 
             .menu {
@@ -54,6 +62,19 @@ body {
             .shopping-cart {
                 display: flex;
                 justify-content: center;
+
+                a {
+                    position: relative;
+                    color: black;
+                }
+
+
+                #ProductCount {
+                    position: absolute;
+                    top: 0;
+                    left: -60%;
+                    font-size: 1.5rem;
+                }
 
                 img {
                     max-width: 50px;
