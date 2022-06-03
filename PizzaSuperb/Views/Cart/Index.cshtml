@@ -17,13 +17,25 @@
         else
         {
             <ul>
-                <li>
-                    <div class="product-item">
-                        <img>
-                        <span class="name"></span>
-                        <span class="price"></span>
-                    </div>
-                </li>
+                @foreach (var product in Model.PizzaTypes)
+                {
+                    <li>
+                        <div class="product-item">
+                            @if (product.PhotoUrl == null)
+                            {
+                                <img src="~/img/no-image.png">
+                            }
+                            else
+                            {
+                                <img src="@product.PhotoUrl">
+                            }
+                            <span class="name">@product.Name</span>
+                            <span class="price">@product.Price</span>
+                            <span class="product-count">@product.Count</span>
+                            <span class="total-price">@(product.Price * product.Count)</span>
+                        </div>
+                    </li>
+                }
             </ul>
             <div class="separator"></div>
             <div class="doppings-block">

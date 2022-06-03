@@ -2,19 +2,14 @@
 using BLL.DTO;
 using BLL.Interfaces;
 using DAL.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    internal class CartService: ICartService
+    internal class CartService : ICartService
     {
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
-        
+
 
         public CartService(IUnitOfWork uow, IMapper mapper)
         {
@@ -29,5 +24,12 @@ namespace BLL.Services
 
             return dtos;
         }
+
+        //maybe add check for IsForSale flag
+        public async Task<string?> GetPhotoByName(string name)
+            => (await _uow.PizzaTypes.GetAsync(x => x.Name == name))?.PhotoUrl;
+
+        public async Task<double?> GetPriceByName(string name)
+            => (await _uow.PizzaTypes.GetAsync(x => x.Name == name))?.Price;
     }
 }

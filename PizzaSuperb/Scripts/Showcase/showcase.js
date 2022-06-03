@@ -1,13 +1,24 @@
 ﻿$(document).ready(function () {
 
     let productCount = $('#ProductCount');
+    let cookieIdentifier = 'product';
     btnsInnit();
 
     //not client-side for purpose.
     $('#SearchText').change(function (e) {
+        let name = $(this).val();
+        getSearchedProducts(name);       
+    });
+
+    $('#ClearBtn').click(function (e) {
+        $('#SearchText').val('');
+        clearCookies();
+        getSearchedProducts('');
+    });
+
+    function getSearchedProducts(name) {
 
         $('.product').remove();
-        let name = $(this).val();
 
         $.ajax({
             url: window.GetProductsByNameUrl + name,
@@ -24,17 +35,19 @@
                 btnsInnit();
             }
         });
-    });
+    }
 
     function btnsInnit() {
         $('.add').click(function (e) {
-            let count = $(this).siblings('.count');
+            let count = $(this).siblings('.count');           
             addProduct(count);
+            Cookies.set(cookieIdentifier + count.attr('name'), count.text(), {expires: 2});
         });
 
         $('.remove').click(function (e) {
             let count = $(this).siblings('.count');
             removeProduct(count);
+            Cookies.set(cookieIdentifier + count.attr('name'), count.text(), { expires: 2 });
         });
     }
 
@@ -55,5 +68,16 @@
         localCount.text(localCount.text() == '0' ? '0' : parseInt(localCount.text()) - 1);
         localCount.parent('.btns').css('border-color', localCount.text() == '0' ? 'black' : '#E68891');
         localCount.css('color', localCount.text() == '0' ? 'black' : '#E68891');
+    }
+
+    function clearCookies() {
+        let productNames = $('.count').filter(
+            function (e) {
+                return parseInt($(this).text()) > 0
+            });
+
+        productNames.each(function (e) {
+            Cookies.remove($(this).attr('name'));
+        });
     }
 });
