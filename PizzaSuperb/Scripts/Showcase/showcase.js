@@ -1,16 +1,41 @@
 ﻿$(document).ready(function () {
 
     let productCount = $('#ProductCount');
+    btnsInnit();
 
-    $('.add').click(function (e) {
-        let count = $(this).siblings('.count');
-        addProduct(count);
+    //not client-side for purpose.
+    $('#SearchText').change(function (e) {
+
+        $('.product').remove();
+        let name = $(this).val();
+
+        $.ajax({
+            url: "Showcase/ProductsByName?name=" + name,
+            type: "GET",
+            dataType: 'html',
+            beforeSend: function () {
+                $('.product').remove();
+                $('.spinner-border').css('display', 'block');
+            },
+            success: function (data) {
+                $('.products').html(data);
+                $('.spinner-border').css('display', 'none');
+                btnsInnit();
+            }
+        });
     });
 
-    $('.remove').click(function (e) {
-        let count = $(this).siblings('.count');
-        removeProduct(count);
-    });
+    function btnsInnit() {
+        $('.add').click(function (e) {
+            let count = $(this).siblings('.count');
+            addProduct(count);
+        });
+
+        $('.remove').click(function (e) {
+            let count = $(this).siblings('.count');
+            removeProduct(count);
+        });
+    }
 
     function addProduct(localCount) {
         localCount.parent('.btns').css('border-color', '#E68891');

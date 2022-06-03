@@ -4,7 +4,9 @@ namespace PizzaSuperb.Controllers
 {
     public class CartController : Controller
     {
-        public ActionResult Index()
+
+        [Route("Cart/{uuid}")]
+        public ActionResult Index(Guid uuid)
         {
             return View();
         }

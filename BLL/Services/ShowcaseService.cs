@@ -16,11 +16,13 @@ namespace BLL.Services
             _mapper = mapper;
         }
 
-        public async Task<List<PizzaTypeDTO>> GetSaleProducts()
-        {
-            var entities = await _uow.PizzaTypes.GetAllAsync(x => x.IsForSale);
+        public async Task<List<PizzaTypeDTO>> GetSaleProducts(string? name = "")
+        {           
+            var entities = name is null
+                           ? await _uow.PizzaTypes.GetAllAsync(x => x.IsForSale)
+                           : await _uow.PizzaTypes.GetAllAsync(x => x.IsForSale && x.Name.Contains(name));
+            
             var dtos = _mapper.Map<List<PizzaTypeDTO>>(entities);
-
             return dtos;
         }
     }

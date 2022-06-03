@@ -17,5 +17,12 @@ namespace PizzaSuperb.Controllers
             var productList = await _bll.ShowcaseService.GetSaleProducts();
             return View(productList);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ProductsByName(string name)
+        {
+            var productList = await _bll.ShowcaseService.GetSaleProducts(name);
+            return PartialView("_ProductsByName", productList);
+        }
     }
 }

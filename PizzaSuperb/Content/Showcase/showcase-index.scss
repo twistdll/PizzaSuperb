@@ -23,10 +23,6 @@
         img {
             max-width: 50px;
             height: 100%;
-
-            &:hover {
-                //do animation
-            }
         }
     }
 
@@ -35,7 +31,6 @@
         display: flex;
         align-items: center;
         padding-left: 2rem;
-        padding-top: 1rem;
         font-size: 1.3rem;
         font-weight: 600;
 
@@ -45,17 +40,31 @@
 
         input {
             width: 40%;
+            height: 70%;
         }
+    }
+
+    .spinner-border {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
     }
 
     .products {
         display: flex;
         align-items: center;
         flex-wrap: wrap;
+        min-height: 500px;
 
         .product {
             position: relative;
             padding: 1.5rem;
+
+            .no-result {
+                font-weight: 600;
+                margin-inline: auto;
+            }
 
             &__content {
                 display: flex;

@@ -4,6 +4,6 @@ namespace BLL.Interfaces
 {
     public interface IShowcaseService
     {
-        Task<List<PizzaTypeDTO>> GetSaleProducts();
+        Task<List<PizzaTypeDTO>> GetSaleProducts(string? name = "");
     }
 }
