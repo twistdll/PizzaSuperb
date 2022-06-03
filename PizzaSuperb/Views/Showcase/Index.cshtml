@@ -19,7 +19,7 @@
                     <div class="photo">
                         @if (@item.PhotoUrl != null)
                         {
-                            <img href="@item.PhotoUrl">
+                            <img src="@item.PhotoUrl">
                         }
                         else
                         {
@@ -27,11 +27,11 @@
                         }
                     </div>
                     <div class="price">
-                        @if (item.Price != item.DiscountedPrice)
+                        @if (item.OldPrice != item.Price)
                         {
-                            <span class="price__value__old">@item.Price $</span>
+                            <span class="price__value__old">@item.OldPrice $</span>
                         }
-                        <span class="price__value">@item.DiscountedPrice $</span>
+                        <span class="price__value">@item.Price $</span>
                     </div>
                     <div class="title">
                         @item.Name
