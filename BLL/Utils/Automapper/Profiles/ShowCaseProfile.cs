@@ -9,7 +9,8 @@ namespace BLL.Utils.Automapper.Profiles
         public ShowcaseProfile()
         {
             CreateMap<PizzaType, PizzaTypeDTO>()
-                .ForMember(dst => dst.DiscountedPrice, opt => opt.MapFrom(src => src.Price * (1 - (src.Discount ?? 0))));
+                .ForMember(dst  => dst.OldPrice, opt => opt.MapFrom(src => src.Price))
+                .ForMember(dst => dst.Price, opt => opt.MapFrom(src => src.Price * (1 - (src.Discount ?? 0))));
         }
     }
 }

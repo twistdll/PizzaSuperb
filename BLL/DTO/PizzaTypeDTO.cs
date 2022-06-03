@@ -6,9 +6,7 @@
         public string Name { get; init; }
         public string Description { get; init; }
         public string? PhotoUrl { get; init; }
-        public double Price { get; init; }
-
-#warning fix using this property
-        public double DiscountedPrice { get; init; } 
+        public double OldPrice { get; init; }
+        public double Price { get; init; } 
     }
 }
