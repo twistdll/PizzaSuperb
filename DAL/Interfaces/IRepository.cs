@@ -10,6 +10,7 @@ namespace DAL.Interfaces
         void UpdateAsync(T entity);
         Task<T?> GetAsync(Expression<Func<T, bool>> predicate);
         Task<List<T>?> GetAllAsync(Expression<Func<T, bool>> predicate);
+        Task<List<T>?> GetAllAsync();
 
     }
 }

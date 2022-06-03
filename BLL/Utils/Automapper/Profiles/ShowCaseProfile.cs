@@ -11,6 +11,8 @@ namespace BLL.Utils.Automapper.Profiles
             CreateMap<PizzaType, PizzaTypeDTO>()
                 .ForMember(dst  => dst.OldPrice, opt => opt.MapFrom(src => src.Price))
                 .ForMember(dst => dst.Price, opt => opt.MapFrom(src => src.Price * (1 - (src.Discount ?? 0))));
+
+            CreateMap<Dopping, DoppingDTO>();
         }
     }
 }

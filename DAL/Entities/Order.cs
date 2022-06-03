@@ -8,7 +8,7 @@ namespace DAL.Entities
         public Guid Id { get; set; }
 
         public DateTime DateCreated { get; set; }
-        public int TotalPrice { get; set; }
+        public double TotalPrice { get; set; }
         public string? Address { get; set; }
 
         public int UserId { get; set; }

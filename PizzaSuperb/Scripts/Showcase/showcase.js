@@ -10,10 +10,11 @@
         let name = $(this).val();
 
         $.ajax({
-            url: "Showcase/ProductsByName?name=" + name,
+            url: window.GetProductsByNameUrl + name,
             type: "GET",
             dataType: 'html',
             beforeSend: function () {
+                productCount.text('');
                 $('.product').remove();
                 $('.spinner-border').css('display', 'block');
             },

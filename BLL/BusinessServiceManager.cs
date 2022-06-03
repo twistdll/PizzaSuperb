@@ -16,8 +16,10 @@ namespace BLL
             _mapper = mapper;
         }
 
-
         private IShowcaseService? _showcaseService;
         public IShowcaseService ShowcaseService => _showcaseService ??= new ShowcaseService(_uow, _mapper);
+
+        private ICartService _cartService;
+        public ICartService CartService => _cartService ??= new CartService(_uow, _mapper);
     }
 }

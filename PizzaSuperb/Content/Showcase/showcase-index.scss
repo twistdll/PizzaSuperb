@@ -62,8 +62,8 @@
             padding: 1.5rem;
 
             .no-result {
+                font-size: 2rem;
                 font-weight: 600;
-                margin-inline: auto;
             }
 
             &__content {
@@ -78,9 +78,11 @@
                     justify-content: center;
                     background-color: $mainYellow;
                     border-radius: 20px 20px 0px 0px;
+                    width: 100%;
 
                     img {
                         max-width: 50%;
+                        min-height: 215px;
                     }
                 }
 
@@ -89,8 +91,9 @@
                     display: flex;
                     flex-direction: column;
                     top: 10%;
-                    right: 25%;
+                    right: 18%;
                     font-size: 1.3rem;
+                    font-weight: 600;
 
                     &__value {
 

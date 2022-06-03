@@ -18,6 +18,9 @@ namespace DAL
         public async Task<T?> GetAsync(Expression<Func<T, bool>> predicate)
             => await _db.Set<T>().AsNoTracking().Where(predicate).FirstOrDefaultAsync();
 
+        public async Task<List<T>?> GetAllAsync()
+        =>  await _db.Set<T>().AsNoTracking().ToListAsync();
+        
         public async Task<List<T>?> GetAllAsync(Expression<Func<T, bool>> predicate)
             => await _db.Set<T>().AsNoTracking().Where(predicate).ToListAsync();
 
