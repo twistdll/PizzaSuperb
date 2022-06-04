@@ -1,17 +1,20 @@
 ﻿$(document).ready(function () {
 
     let productCount = $('#ProductCount');
-    productCount.text(getSumCount());
+    productCount.text(getSumCount() == 0 ? '' : getSumCount());
 
     btnsInit();
 
     $('#SearchText').change(function (e) {
         let name = $(this).val();
-        getSearchedProducts(name);       
+        getSearchedProducts(name);
     });
 
     $('#ClearBtn').click(function (e) {
         $('#SearchText').val('');
+        productCount.text(parseInt(productCount.text()) - getReduceValue());
+        if (productCount.text() == '0')
+            productCount.text('');
 
         let cookiePrefix = 'product';
         clearCookies(cookiePrefix);
@@ -34,7 +37,7 @@
             success: function (data) {
                 $('.products').html(data);
                 $('.spinner-border').css('display', 'none');
-                btnsInnit();
+                btnsInit();
             }
         });
     }
@@ -43,9 +46,9 @@
         let cookiePrefix = 'product';
 
         $('.add').click(function (e) {
-            let count = $(this).siblings('.count');           
+            let count = $(this).siblings('.count');
             addProduct(count);
-            Cookies.set(cookiePrefix + count.attr('name'), count.text(), {expires: 2});
+            Cookies.set(cookiePrefix + count.attr('name'), count.text(), { expires: 2 });
         });
 
         $('.remove').click(function (e) {
@@ -57,7 +60,7 @@
 
     function addProduct(localCount) {
         localCount.parent('.btns').css('border-color', '#E68891');
-        localCount.css('color','#E68891');
+        localCount.css('color', '#E68891');
         localCount.text(parseInt(localCount.text()) + 1);
         productCount.text(productCount.text() == '' ? 1 : parseInt(productCount.text()) + 1);
     }
@@ -91,5 +94,20 @@
             sum += parseInt($(this).text())
         });
         return sum;
+    }
+
+    function getReduceValue() {
+        let value = 0;
+        $('.count')
+            .filter(
+                function (e) {
+                    return parseInt($(this).text()) > 0
+                })
+            .each(
+                function (e) {
+                    value += parseInt($(this).text())
+                });
+
+        return value;
     }
 });

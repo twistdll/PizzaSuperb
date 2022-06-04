@@ -16,11 +16,20 @@
         }
         else
         {
-            <ul>
+            <table class="product-table">
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td>Name</td>
+                        <td>Price</td>
+                        <td>Count</td>
+                        <td>Total price</td>
+                    </tr>
+                </thead>
                 @foreach (var product in Model.PizzaTypes)
                 {
-                    <li>
-                        <div class="product-item">
+                    <tr class="product-item">
+                        <td>
                             @if (product.PhotoUrl == null)
                             {
                                 <img src="~/img/no-image.png">
@@ -29,14 +38,41 @@
                             {
                                 <img src="@product.PhotoUrl">
                             }
+                        </td>
+                        <td>
                             <span class="name">@product.Name</span>
-                            <span class="price">@product.Price</span>
+                        </td>
+                        <td>
+                            <span class="price">@product.Price $</span>
+                        </td>
+                        <td>
                             <span class="product-count">@product.Count</span>
-                            <span class="total-price">@(product.Price * product.Count)</span>
-                        </div>
-                    </li>
+                        </td>
+                        <td>
+                            <span class="total-price">@(product.Price * product.Count) $</span>
+                        </td>
+                    </tr>
                 }
-            </ul>
+                <tr class="result-row">
+                    <td></td>
+                    <td>
+                        <span>
+                            Total:
+                        </span>
+                    </td>
+                    <td></td>
+                    <td>
+                        <span>
+                            Total:
+                        </span>
+                    </td>
+                    <td>
+                        <span id="TotalPrice"></span>
+                        <span>$</span>
+                    </td>
+                </tr>
+            </table>
+
             <div class="separator"></div>
             <div class="doppings-block">
                 @foreach (var dopping in Model.Doppings)
@@ -57,13 +93,14 @@
                         <div class="add-remove-block">
                             <div class="btns">
                                 <span class="remove">-</span>
-                                <span class="count" name=" ">0</span>
+                                <span class="count" name="@dopping.Name">0</span>
                                 <span class="add">+</span>
                             </div>
                         </div>
                     </div>
                 }
             </div>
+            <div class="separator"></div>
         }
     </div>
 </div>

@@ -2,7 +2,8 @@
   {
     "outputFileName": "wwwroot/js/main.js",
     "inputFiles": [
-      "Scripts/Showcase/showcase.js"
+      "Scripts/Showcase/showcase.js",
+      "Scripts/Cart/cart.js"
     ]
   }
 ]
