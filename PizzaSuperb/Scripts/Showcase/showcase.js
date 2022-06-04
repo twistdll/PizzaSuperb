@@ -1,10 +1,10 @@
 ﻿$(document).ready(function () {
 
     let productCount = $('#ProductCount');
-    let cookieIdentifier = 'product';
-    btnsInnit();
+    productCount.text(getSumCount());
 
-    //not client-side for purpose.
+    btnsInit();
+
     $('#SearchText').change(function (e) {
         let name = $(this).val();
         getSearchedProducts(name);       
@@ -12,10 +12,13 @@
 
     $('#ClearBtn').click(function (e) {
         $('#SearchText').val('');
-        clearCookies();
+
+        let cookiePrefix = 'product';
+        clearCookies(cookiePrefix);
         getSearchedProducts('');
     });
 
+    //not client-side for purpose.
     function getSearchedProducts(name) {
 
         $('.product').remove();
@@ -25,7 +28,6 @@
             type: "GET",
             dataType: 'html',
             beforeSend: function () {
-                productCount.text('');
                 $('.product').remove();
                 $('.spinner-border').css('display', 'block');
             },
@@ -37,17 +39,19 @@
         });
     }
 
-    function btnsInnit() {
+    function btnsInit() {
+        let cookiePrefix = 'product';
+
         $('.add').click(function (e) {
             let count = $(this).siblings('.count');           
             addProduct(count);
-            Cookies.set(cookieIdentifier + count.attr('name'), count.text(), {expires: 2});
+            Cookies.set(cookiePrefix + count.attr('name'), count.text(), {expires: 2});
         });
 
         $('.remove').click(function (e) {
             let count = $(this).siblings('.count');
             removeProduct(count);
-            Cookies.set(cookieIdentifier + count.attr('name'), count.text(), { expires: 2 });
+            Cookies.set(cookiePrefix + count.attr('name'), count.text(), { expires: 2 });
         });
     }
 
@@ -70,14 +74,22 @@
         localCount.css('color', localCount.text() == '0' ? 'black' : '#E68891');
     }
 
-    function clearCookies() {
+    function clearCookies(cookiePrefix) {
         let productNames = $('.count').filter(
             function (e) {
                 return parseInt($(this).text()) > 0
             });
 
         productNames.each(function (e) {
-            Cookies.remove($(this).attr('name'));
+            Cookies.remove(cookiePrefix + $(this).attr('name'));
         });
+    }
+
+    function getSumCount() {
+        let sum = 0;
+        $('.count').each(function (e) {
+            sum += parseInt($(this).text())
+        });
+        return sum;
     }
 });

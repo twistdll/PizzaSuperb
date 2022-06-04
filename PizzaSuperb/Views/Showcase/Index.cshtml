@@ -1,4 +1,4 @@
-﻿@model List<PizzaTypeDTO>
+﻿@model List<PizzaTypeViewModel>
 
 <script>
     window.GetProductsByNameUrl = "Showcase/ProductsByName?name="
@@ -51,7 +51,7 @@
                     <div class="add-remove-block">
                         <div class="btns">
                             <span class="remove">-</span>
-                            <span class="count" name="@item.Name">0</span>
+                            <span class="count" name="@item.Name">@item.Count</span>
                             <span class="add">+</span>
                         </div>
                     </div>
