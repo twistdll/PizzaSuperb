@@ -45,13 +45,13 @@
     function btnsInit() {
         let cookiePrefix = 'product';
 
-        $('.add').click(function (e) {
+        $('#Showcase .add').click(function (e) {
             let count = $(this).siblings('.count');
             addProduct(count);
             Cookies.set(cookiePrefix + count.attr('name'), count.text(), { expires: 2 });
         });
 
-        $('.remove').click(function (e) {
+        $('#Showcase .remove').click(function (e) {
             let count = $(this).siblings('.count');
             removeProduct(count);
             Cookies.set(cookiePrefix + count.attr('name'), count.text(), { expires: 2 });

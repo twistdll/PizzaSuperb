@@ -98,7 +98,10 @@
                 padding: 10px;
 
                 img {
+                    min-width: 180px;
                     max-width: 200px;
+                    max-height: 200px;
+                    border-radius: 10px;
                 }
 
                 .text-content {
@@ -107,6 +110,7 @@
                     align-items: center;
                     border: 1px solid;
                     width: 100%;
+                    font-size: 1.3rem;
 
                     span {
                         padding: 0.2rem;
@@ -121,6 +125,38 @@
 
         .add-remove-block {
             @include add-remove-block;
+        }
+
+        #OrderForm {
+            width: 40%;
+            margin: 3rem auto;
+
+            .order-info {
+                display: flex;
+                flex-direction: column;
+                font-weight: 600;
+
+                input{
+                    border-radius: 7px;
+                    border: none;
+                }
+            }
+            
+            #CreateOrderBtn {
+                width: 40%;
+                margin-top: 1rem;
+                border-radius: 10px;
+                border: none;
+
+                &:hover{
+                    background-color: $mainYellow;
+                }
+
+                @media(max-width: 850px)
+                {
+                    width: 100%;
+                }           
+            }
         }
     }
 }
