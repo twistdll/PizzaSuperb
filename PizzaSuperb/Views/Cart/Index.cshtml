@@ -1,5 +1,9 @@
 ﻿@model OrderViewModel
 
+<script>
+    window.CreateOrderUrl = "Cart/CreateOrder"
+</script>
+
 <div id="Cart">
     <div id="BackBtn">
         <a href="/">
@@ -40,7 +44,7 @@
                             }
                         </td>
                         <td>
-                            <span class="name">@product.Name</span>
+                            <span class="product-name">@product.Name</span>
                         </td>
                         <td>
                             <span class="price">@product.Price $</span>
@@ -87,7 +91,7 @@
                             <img src="@dopping.PhotoUrl">
                         }
                         <div class="text-content">
-                            <span class="name">@dopping.Name</span>
+                            <span class="dopping-name">@dopping.Name</span>
                             <span class="price">@dopping.Price $</span>
                         </div>
                         <div class="add-remove-block">
@@ -104,11 +108,11 @@
             <form id="OrderForm">
                 <div class="order-info">
                     <label>Email:</label>
-                    <input name="Email">
+                    <input name="Email" value="1@@mail.ru">
                     <label>Password:</label>
-                    <input name="Password">
+                    <input name="Password" value="1">
                     <label>Address</label>
-                    <input name="Address">
+                    <input name="Address" value="1">
                 </div>
                 <button id="CreateOrderBtn">
                     Make order

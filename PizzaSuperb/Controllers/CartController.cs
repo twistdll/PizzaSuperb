@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PizzaSuperb.Constants;
 using PizzaSuperb.Extensions;
+using PizzaSuperb.Models;
 using PizzaSuperb.ViewModels;
 
 namespace PizzaSuperb.Controllers
@@ -22,7 +23,7 @@ namespace PizzaSuperb.Controllers
 
             foreach (var item in namesCountPairs)
             {
-                string name = item.Key.Split(CookieConstants.ProductPrefix)[1].Replace("%20"," ");
+                string name = item.Key.Split(CookieConstants.ProductPrefix)[1].Replace("%20", " ");
                 string? photoUrl = await _bll.CartService.GetPhotoByName(name);
                 double price = (await _bll.CartService.GetPriceByName(name)) ?? 0;
 
@@ -36,7 +37,7 @@ namespace PizzaSuperb.Controllers
                         Count = int.Parse(item.Value)
                     });
                 }
-            }           
+            }
 
             var doppings = await _bll.CartService.GetDoppings();
 
@@ -45,11 +46,33 @@ namespace PizzaSuperb.Controllers
             return View(model);
         }
 
-        // autorized only in future
         [HttpPost]
-        public async void CreateOrder()
-        { 
-            
+        public async Task<IActionResult> CreateOrder([FromBody] UserOrderInfo info)
+        {
+            var user = await _bll.UserService.GetUser(info.Email, info.Password);
+
+            if (user == null)
+                return BadRequest();
+
+
+            var pairs = Request.Cookies
+                               .ToFilteredPairs(CookieConstants.ProductPrefix, CookieConstants.DoppingPrefix)
+                               .ToDictionary(x => x.Key, x => x.Value);
+            var parsedPairs = new Dictionary<string, string>();
+            foreach (var item in pairs)
+            {
+                if (int.Parse(item.Value) > 0)
+                    parsedPairs.Add(item.Key.Split(new string[] { CookieConstants.ProductPrefix, CookieConstants.DoppingPrefix }, StringSplitOptions.None)[1]
+                                        .Replace("%20", " "),
+                                item.Value);
+            }
+
+            bool created = await _bll.CartService.CreateOrder(user, parsedPairs, info.Address);
+
+            if (created)
+                return Ok();
+            else
+                return BadRequest();
         }
     }
 }

@@ -4,18 +4,59 @@
 
     let cookiePrefix = "dopping"
 
+    $('#OrderForm').validate({
+        rules: {
+            Email: {
+                required: true,
+                email: true
+            },
+            Password: {
+                required: true
+            },
+            Address: {
+                required: true
+            }
+        }
+    });
+
     $('#Cart .add').click(function (e) {
         let count = $(this).siblings('.count');
         addDopping(count);
+        Cookies.set(cookiePrefix + count.attr('name'), count.text(), { expires: 2 });
     });
 
     $('#Cart .remove').click(function (e) {
         let count = $(this).siblings('.count');
         removeDopping(count);
+        Cookies.set(cookiePrefix + count.attr('name'), count.text(), { expires: 2 });
     });
 
     $('#CreateOrderBtn').click(function (e) {
         e.preventDefault();
+        
+        if ($('#OrderForm').valid()) {
+            debugger;
+            let email = $('input[name="Email"]').val();
+            let password = $('input[name="Password"]').val();
+            let address = $('input[name="Address"]').val();
+
+            $.ajax({
+                url: window.CreateOrderUrl,
+                type: "POST",
+                data: JSON.stringify({
+                    Email: email,
+                    Password: password,
+                    Address: address
+                }),
+                contentType: "application/json",
+                success: function (data) {
+                    alert('ok');
+                },
+                error: function (data) {
+                    alert('ne ok');
+                }
+            });
+        }
     });
 
     function addDopping(localCount) {

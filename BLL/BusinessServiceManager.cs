@@ -21,5 +21,8 @@ namespace BLL
 
         private ICartService _cartService;
         public ICartService CartService => _cartService ??= new CartService(_uow, _mapper);
+
+        private IUserService _userService;
+        public IUserService UserService => _userService ??= new UserService(_uow, _mapper);
     }
 }
