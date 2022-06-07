@@ -23,12 +23,14 @@
         let count = $(this).siblings('.count');
         addDopping(count);
         Cookies.set(cookiePrefix + count.attr('name'), count.text(), { expires: 2 });
+        $('#TotalPrice').text(getTotal());
     });
 
     $('#Cart .remove').click(function (e) {
         let count = $(this).siblings('.count');
         removeDopping(count);
         Cookies.set(cookiePrefix + count.attr('name'), count.text(), { expires: 2 });
+        $('#TotalPrice').text(getTotal());
     });
 
     $('#CreateOrderBtn').click(function (e) {
@@ -72,11 +74,19 @@
     }
 
     function getTotal() {
-        let sum = 0;
+        debugger;
+        let sum = 0.0;
 
         $('.total-price').each(function (e) {
             sum += parseInt($(this).text())
         });
+
+        $('.dopping-item').each(function (e) {
+            console.log(parseFloat($(' .price', this).text()));
+            console.log(parseInt($(' .count', this).text()));
+            sum += (parseFloat($(' .price', this).text().replace(',','.')) * parseInt($(' .count', this).text()))
+        });
+
         return sum;
     }
 })
