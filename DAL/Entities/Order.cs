@@ -11,6 +11,7 @@ namespace DAL.Entities
         public DateTime DateCreated { get; set; }
         public double TotalPrice { get; set; }
         public string? Address { get; set; }
+        public bool IsDelivered { get; set; }
 
         public int UserId { get; set; }
         public User User { get; set; }
