@@ -16,14 +16,14 @@ namespace PizzaSuperb.Controllers
             _bll = bll;
         }
 
-        public async Task<IActionResult> Index(OrderViewModel model)
+        public async Task<IActionResult> Index()
         {
             var namesCountPairs = Request.Cookies.ToFilteredPairs(CookieConstants.ProductPrefix);
             var pizzaTypes = new List<PizzaTypeOrderViewModel>();
 
             foreach (var item in namesCountPairs)
             {
-                string name = item.Key.Split(CookieConstants.ProductPrefix)[1].Replace("%20", " ");
+                string name = item.Key.ToItemName(CookieConstants.ProductPrefix);
                 string? photoUrl = await _bll.CartService.GetPhotoByName(name);
                 double price = (await _bll.CartService.GetPriceByName(name)) ?? 0;
 
@@ -40,8 +40,26 @@ namespace PizzaSuperb.Controllers
             }
 
             var doppings = await _bll.CartService.GetDoppings();
+            namesCountPairs = Request.Cookies.ToFilteredPairs(CookieConstants.DoppingPrefix);
+            var doppingViewModels = new List<DoppingOrderViewModel>();
 
-            model.Doppings = doppings;
+            foreach (var item in doppings)
+            {
+                var targetCookieValue = namesCountPairs.Where(x => x.Key.ToItemName(CookieConstants.DoppingPrefix) == item.Name)
+                                                       .FirstOrDefault()
+                                                       .Value;
+
+                doppingViewModels.Add(new DoppingOrderViewModel()
+                {
+                    PhotoUrl = item.PhotoUrl,
+                    Name = item.Name,
+                    Price = item.Price,
+                    Count = string.IsNullOrEmpty(targetCookieValue) ? 0 : int.Parse(targetCookieValue)
+                });
+            }
+
+            var model = new OrderViewModel();
+            model.Doppings = doppingViewModels;
             model.PizzaTypes = pizzaTypes;
             return View(model);
         }

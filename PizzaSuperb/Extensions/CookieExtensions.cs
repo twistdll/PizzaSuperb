@@ -7,5 +7,8 @@
 
         public static IEnumerable<KeyValuePair<string, string>> ToFilteredPairs(this IRequestCookieCollection cookies, string prefix1, string prefix2)
            => cookies.Where(x => x.Key.StartsWith(prefix1) || x.Key.StartsWith(prefix2) && int.Parse(x.Value) > 0);
+
+        public static string ToItemName(this string key, string prefix)
+            => key.Split(prefix)[1].Replace("%20", " ");
     }
 }
