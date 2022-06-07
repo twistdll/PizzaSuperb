@@ -18,7 +18,7 @@ namespace PizzaSuperb.Extensions
             {
                 string notParsedCount = nameCountPairs
                                             .Where(x =>
-                                                    x.Key.Split(CookieConstants.ProductPrefix)[1].Replace("%20", " ") == dto.Name)
+                                                    x.Key.ToItemName(CookieConstants.ProductPrefix) == dto.Name)
                                             .FirstOrDefault()
                                             .Value;
 

@@ -3,6 +3,8 @@ using BLL.DTO;
 using BLL.Interfaces;
 using DAL.Entities;
 using DAL.Interfaces;
+using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace BLL.Services
 {
@@ -10,7 +12,6 @@ namespace BLL.Services
     {
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
-
 
         public CartService(IUnitOfWork uow, IMapper mapper)
         {
@@ -23,31 +24,17 @@ namespace BLL.Services
                                 string address)
         {
             var userEntity = _mapper.Map<User>(user);
+            double totalPrice = await GetTotalPrice(salePairs);
 
-#warning impl stored procedure for this
-            double totalPrice = 0;
-            foreach (var name in salePairs.Keys)
-            {
-                var dopping = new Dopping();
-                var product = await _uow.PizzaTypes.GetAsync(x => x.Name == name);                      
-
-                if(product == null)
-                    dopping = await _uow.Doppings.GetAsync(x => x.Name == name);
-
-                if (product == null 
-                    || product.IsForSale == false 
-                    || string.IsNullOrEmpty(salePairs[name]))
-                    return false;
-
-                totalPrice += (product.Price * int.Parse(salePairs[name]));
-            }
+            if(totalPrice <= 0)
+                return false;
 
             var order = new Order()
             {
                 DateCreated = DateTime.Now,
                 TotalPrice = totalPrice,
                 Address = address,
-                User = userEntity
+                UserId = userEntity.Id
             };
 
             _uow.Orders.Insert(order);
@@ -67,15 +54,49 @@ namespace BLL.Services
             => (await _uow.PizzaTypes.GetAsync(x => x.Name == name))?.PhotoUrl;
 
         public async Task<double?> GetPriceByName(string name)
-            => (await _uow.PizzaTypes.GetAsync(x => x.Name == name))?.Price;
+        {
+            var product = await _uow.PizzaTypes.GetAsync(x => x.Name == name);
+            
+            if(product?.Discount != null && product?.Price != null)
+                return product.Price * (1 - product.Discount);
+
+            return product?.Price;
+        }
 
         #region Private methods
 
-        //private double GetTotalPrice<T>(List<string> names)
-        //{ 
+#warning need to encapsulate init params logic in DAL smh
+        private async Task<double> GetTotalPrice(Dictionary<string, string> pairs)
+        {
+            var outParam = new SqlParameter()
+            {
+                ParameterName = "@totalPrice",
+                SqlDbType = SqlDbType.Float,
+                Direction = ParameterDirection.Output
+            };
 
+            var data = new DataTable();
+            data.Columns.Add("Name", typeof(string));
+            data.Columns.Add("Count", typeof(int));
 
-        //}
+            foreach (var item in pairs)
+            {
+                data.Rows.Add(item.Key, int.Parse(item.Value));
+            }
+
+            var inParam = new SqlParameter()
+            {
+                ParameterName = "@pairs",
+                SqlDbType = SqlDbType.Structured,
+                Value = data,
+                TypeName = "NameCountPairs"
+            };
+
+            await _uow.QueryService.ExecuteStoredProcedureAsync("[dbo].[ItemsTotalSum] @pairs, @totalPrice OUTPUT", 
+                                                                inParam, 
+                                                                outParam);
+            return (double)outParam.Value;
+        }
 
         #endregion
     }

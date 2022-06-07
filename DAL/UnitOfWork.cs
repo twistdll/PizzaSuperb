@@ -1,7 +1,7 @@
 ﻿using DAL.Context;
 using DAL.Entities;
 using DAL.Interfaces;
-
+using DAL.Services;
 
 namespace DAL
 {
@@ -14,10 +14,22 @@ namespace DAL
         private GenericRepository<PizzaType> _pizzaTypes;
         private GenericRepository<Promocode> _promocodes;
         private GenericRepository<User> _users;
+        private QueryService _queryService;
 
         public UnitOfWork(string connectionString)
         {
-            _db = new ApplicationContext(connectionString);
+            _db = new ApplicationContext(connectionString);                   
+        }
+
+        public IQueryService QueryService
+        {
+            get
+            {
+                if (_queryService == null)
+                    _queryService = new QueryService(_db);
+
+                return _queryService;
+            }
         }
 
         public IRepository<Order> Orders
@@ -89,6 +101,6 @@ namespace DAL
         public void Dispose()
         { 
             GC.SuppressFinalize(this);
-        }
+        }      
     }
 }

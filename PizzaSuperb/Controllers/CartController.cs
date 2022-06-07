@@ -72,7 +72,6 @@ namespace PizzaSuperb.Controllers
             if (user == null)
                 return BadRequest();
 
-
             var pairs = Request.Cookies
                                .ToFilteredPairs(CookieConstants.ProductPrefix, CookieConstants.DoppingPrefix)
                                .ToDictionary(x => x.Key, x => x.Value);
