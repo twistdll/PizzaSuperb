@@ -51,7 +51,8 @@
                 }),
                 contentType: "application/json",
                 beforeSend: function (e) {
-                    $('#CreateOrderBtn').text('');
+                    debugger;
+                    $('#CreateOrderBtn span').text('');
                     $('#CreateOrderBtn .spinner-border').css('display','inline-block');
                     $('#CreateOrderBtn').prop('disabled',true);
                 },
@@ -60,7 +61,7 @@
                 },
                 error: function (data) {
                     $('#CreateOrderBtn').prop('disabled', false);
-                    $('#CreateOrderBtn').text('Make order');
+                    $('#CreateOrderBtn span').text('Make order');
                     alert('Error while processing your order. Maybe you have active deliveries. Please contact us by smth.');
                 },
                 complete: function (data) {
