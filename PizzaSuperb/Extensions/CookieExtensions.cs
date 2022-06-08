@@ -2,13 +2,10 @@
 {
     internal static class CookieExtensions
     {
-        public static IEnumerable<KeyValuePair<string, string>> ToFilteredPairs(this IRequestCookieCollection cookies, string prefix)
-            => cookies.Where(x => x.Key.StartsWith(prefix) && int.Parse(x.Value) > 0);
+        public static IEnumerable<KeyValuePair<string, string>> ToFilteredPairs(this IRequestCookieCollection cookies, params string[] prefixes)
+            => cookies.Where(x => prefixes.Any(p => x.Key.StartsWith(p)));
 
-        public static IEnumerable<KeyValuePair<string, string>> ToFilteredPairs(this IRequestCookieCollection cookies, string prefix1, string prefix2)
-           => cookies.Where(x => x.Key.StartsWith(prefix1) || x.Key.StartsWith(prefix2) && int.Parse(x.Value) > 0);
-
-        public static string ToItemName(this string key, string prefix)
-            => key.Split(prefix)[1].Replace("%20", " ");
+        public static string ToItemName(this string key, params string[] prefix)
+            => key.Split(prefix, StringSplitOptions.None)[1].Replace("%20", " ");
     }
 }
