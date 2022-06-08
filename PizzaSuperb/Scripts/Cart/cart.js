@@ -37,7 +37,6 @@
         e.preventDefault();
         
         if ($('#OrderForm').valid()) {
-            debugger;
             let email = $('input[name="Email"]').val();
             let password = $('input[name="Password"]').val();
             let address = $('input[name="Address"]').val();
@@ -51,11 +50,23 @@
                     Address: address
                 }),
                 contentType: "application/json",
+                beforeSend: function (e) {
+                    debugger;
+                    $('#CreateOrderBtn').text('');
+                    $('#CreateOrderBtn .spinner-border').css('display','inline-block');
+                    $('#CreateOrderBtn').prop('disabled',true);
+                },
                 success: function (data) {
                     alert('ok');
                 },
                 error: function (data) {
                     alert('ne ok');
+                },
+                complete: function (data) {
+                    debugger;
+                    $('#CreateOrderBtn').prop('disabled', false);
+                    $('#CreateOrderBtn').text('Make order');
+                    $('#CreateOrderBtn .spinner-border').hide();
                 }
             });
         }
@@ -74,7 +85,7 @@
     }
 
     function getTotal() {
-        debugger;
+
         let sum = 0.0;
 
         $('.total-price').each(function (e) {

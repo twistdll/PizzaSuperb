@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using PizzaSuperb.Constants;
 using PizzaSuperb.Extensions;
-using PizzaSuperb.ViewModels;
 
 namespace PizzaSuperb.Controllers
 {
