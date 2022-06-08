@@ -63,6 +63,17 @@ namespace BLL.Services
             return product?.Price;
         }
 
+        public async Task<bool> GetActiveDeliveryStatus(UserDTO? user)
+        {
+            var userEntity = _mapper.Map<User>(user);
+
+            if (userEntity == null)
+                return false;
+
+            var orders =  await _uow.Orders.GetAllAsync(x => x.UserId == user.Id && x.IsDelivered == false);
+            return orders.Any();
+        }
+
         #region Private methods
 
 #warning need to encapsulate init params logic in DAL smh

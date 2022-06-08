@@ -10,5 +10,6 @@ namespace BLL.Interfaces
         Task<List<DoppingDTO>> GetDoppings();
         Task<string?> GetPhotoByName(string name);
         Task<double?> GetPriceByName(string name);
+        Task<bool> GetActiveDeliveryStatus(UserDTO? user);
     }
 }

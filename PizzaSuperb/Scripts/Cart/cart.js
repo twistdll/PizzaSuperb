@@ -51,21 +51,19 @@
                 }),
                 contentType: "application/json",
                 beforeSend: function (e) {
-                    debugger;
                     $('#CreateOrderBtn').text('');
                     $('#CreateOrderBtn .spinner-border').css('display','inline-block');
                     $('#CreateOrderBtn').prop('disabled',true);
                 },
                 success: function (data) {
-                    alert('ok');
+                    $('#CreateOrderBtn').text('Order was made. Wait for delivery.');
                 },
                 error: function (data) {
-                    alert('ne ok');
-                },
-                complete: function (data) {
-                    debugger;
                     $('#CreateOrderBtn').prop('disabled', false);
                     $('#CreateOrderBtn').text('Make order');
+                    alert('Error while processing your order. Maybe you have active deliveries. Please contact us by smth.');
+                },
+                complete: function (data) {
                     $('#CreateOrderBtn .spinner-border').hide();
                 }
             });

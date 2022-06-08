@@ -58,9 +58,16 @@ namespace PizzaSuperb.Controllers
                 });
             }
 
-            var model = new OrderViewModel();
-            model.Doppings = doppingViewModels;
-            model.PizzaTypes = pizzaTypes;
+            //var deliveryCookieValue = Request.Cookies.ToFilteredPairs(CookieConstants.ActiveDeliveryPrefix).FirstOrDefault().Value;
+            //var hasActiveDeliveries = deliveryCookieValue == null ? false : bool.Parse(deliveryCookieValue);
+
+            var model = new OrderViewModel()
+            {
+                Doppings = doppingViewModels,
+                PizzaTypes = pizzaTypes
+                //HasActiveDeliveries = hasActiveDeliveries
+            };
+
             return View(model);
         }
 
@@ -68,28 +75,48 @@ namespace PizzaSuperb.Controllers
         public async Task<IActionResult> CreateOrder([FromBody] UserOrderInfo info)
         {
             var user = await _bll.UserService.GetUser(info.Email, info.Password);
+            var activeDeliveries = await _bll.CartService.GetActiveDeliveryStatus(user);
 
-            if (user == null)
+            if (user == null || activeDeliveries)
+            {
+                SetCookieResponse("HasActiveDelivery", "false", 30);
                 return BadRequest();
+            }
 
             var pairs = Request.Cookies
                                .ToFilteredPairs(CookieConstants.ProductPrefix, CookieConstants.DoppingPrefix)
                                .ToDictionary(x => x.Key, x => x.Value);
             var parsedPairs = new Dictionary<string, string>();
+
             foreach (var item in pairs)
             {
                 if (int.Parse(item.Value) > 0)
-                    parsedPairs.Add(item.Key.Split(new string[] { CookieConstants.ProductPrefix, CookieConstants.DoppingPrefix }, StringSplitOptions.None)[1]
-                                        .Replace("%20", " "),
-                                item.Value);
+                    parsedPairs.Add(item.Key.ToItemName(CookieConstants.ProductPrefix, CookieConstants.DoppingPrefix),
+                                    item.Value);
             }
 
             bool created = await _bll.CartService.CreateOrder(user, parsedPairs, info.Address);
 
             if (created)
+            {
+                SetCookieResponse("HasActiveDelivery", "true", 30);
                 return Ok();
+            }
             else
+            {
                 return BadRequest();
+            }
         }
+
+
+        #region Private methods
+        private void SetCookieResponse(string cookieName, string cookieValue, int expiredDaysTime)
+        {
+            Response.Cookies.Append(cookieName, cookieValue, new CookieOptions()
+            {
+                Expires = DateTime.Now.AddDays(expiredDaysTime)
+            });
+        }
+        #endregion
     }
 }
