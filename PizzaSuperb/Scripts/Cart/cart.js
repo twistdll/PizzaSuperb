@@ -51,7 +51,6 @@
                 }),
                 contentType: "application/json",
                 beforeSend: function (e) {
-                    debugger;
                     $('#CreateOrderBtn span').text('');
                     $('#CreateOrderBtn .spinner-border').css('display','inline-block');
                     $('#CreateOrderBtn').prop('disabled',true);
@@ -97,6 +96,6 @@
             sum += (parseFloat($(' .price', this).text().replace(',','.')) * parseInt($(' .count', this).text()))
         });
 
-        return sum;
+        return sum.toFixed(1);
     }
 })
