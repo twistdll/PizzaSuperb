@@ -4,6 +4,6 @@ namespace DAL.Interfaces
 {
     public interface IQueryService
     {
-        Task ExecuteStoredProcedureAsync(string nameWithParams, params SqlParameter[] parameters);
+        Task<double> GetTotalPriceOfItems(Dictionary<string,string> nameCountPairs);
     }
 }

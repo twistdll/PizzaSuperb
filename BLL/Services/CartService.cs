@@ -24,7 +24,7 @@ namespace BLL.Services
                                 string address)
         {
             var userEntity = _mapper.Map<User>(user);
-            double totalPrice = await GetTotalPrice(salePairs);
+            double totalPrice = await _uow.QueryService.GetTotalPriceOfItems(salePairs);
 
             if(totalPrice <= 0)
                 return false;
@@ -73,42 +73,5 @@ namespace BLL.Services
             var orders =  await _uow.Orders.GetAllAsync(x => x.UserId == user.Id && x.IsDelivered == false);
             return orders.Any();
         }
-
-        #region Private methods
-
-#warning need to encapsulate init params logic in DAL smh
-        private async Task<double> GetTotalPrice(Dictionary<string, string> pairs)
-        {
-            var outParam = new SqlParameter()
-            {
-                ParameterName = "@totalPrice",
-                SqlDbType = SqlDbType.Float,
-                Direction = ParameterDirection.Output
-            };
-
-            var data = new DataTable();
-            data.Columns.Add("Name", typeof(string));
-            data.Columns.Add("Count", typeof(int));
-
-            foreach (var item in pairs)
-            {
-                data.Rows.Add(item.Key, int.Parse(item.Value));
-            }
-
-            var inParam = new SqlParameter()
-            {
-                ParameterName = "@pairs",
-                SqlDbType = SqlDbType.Structured,
-                Value = data,
-                TypeName = "NameCountPairs"
-            };
-
-            await _uow.QueryService.ExecuteStoredProcedureAsync("[dbo].[ItemsTotalSum] @pairs, @totalPrice OUTPUT", 
-                                                                inParam, 
-                                                                outParam);
-            return (double)outParam.Value;
-        }
-
-        #endregion
     }
 }
