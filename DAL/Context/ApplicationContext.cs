@@ -1,4 +1,5 @@
 ﻿using DAL.Entities;
+using DAL.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Context
@@ -7,8 +8,7 @@ namespace DAL.Context
     {
         private readonly string _connectionString;
 
-        public DbSet<PizzaType> PizzaTypes { get; set; } = null!;
-        public DbSet<Dopping> Doppings { get; set; } = null!;
+        public DbSet<Product> Products { get; set; } = null!;
         public DbSet<Order> Orders { get; set; } = null!;
         public DbSet<OrderConfiguration> OrderConfigurations { get; set; } = null!;
         public DbSet<User> Users { get; set; } = null!;
@@ -23,6 +23,16 @@ namespace DAL.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(_connectionString);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .Entity<Product>()
+                .Property(x => x.ProductType)
+                .HasConversion(
+                    x => x.ToString(),
+                    x => Enum.Parse<ProductType>(x));
         }
     }
 }

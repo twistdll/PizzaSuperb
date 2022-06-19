@@ -6,9 +6,8 @@ namespace DAL.Interfaces
     public interface IUnitOfWork : IDisposable
     {
         IRepository<Order> Orders { get; }
-        IRepository<Dopping> Doppings { get; }
         IRepository<OrderConfiguration> OrderConfigurations { get; }
-        IRepository<PizzaType> PizzaTypes { get; }
+        IRepository<Product> Products { get; }
         IRepository<Promocode> Promocodes { get; }
         IRepository<User> Users { get; }
   

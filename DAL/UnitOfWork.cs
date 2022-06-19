@@ -11,9 +11,8 @@ namespace DAL
 
         #region Repos
         private GenericRepository<Order> _orders;
-        private GenericRepository<Dopping> _doppings;
         private GenericRepository<OrderConfiguration> _orderConfigurations;
-        private GenericRepository<PizzaType> _pizzaTypes;
+        private GenericRepository<Product> _products;
         private GenericRepository<Promocode> _promocodes;
         private GenericRepository<User> _users;
         #endregion
@@ -48,18 +47,7 @@ namespace DAL
                 return _orders;
             }
         }
-
-        public IRepository<Dopping> Doppings
-        {
-            get
-            {
-                if (_doppings == null)
-                    _doppings = new GenericRepository<Dopping>(_db);
-
-                return _doppings;
-            }
-        }
-
+        
         public IRepository<OrderConfiguration> OrderConfigurations
         {
             get
@@ -71,14 +59,14 @@ namespace DAL
             }
         }
 
-        public IRepository<PizzaType> PizzaTypes
+        public IRepository<Product> Products
         {
             get
             {
-                if (_pizzaTypes == null)
-                    _pizzaTypes = new GenericRepository<PizzaType>(_db);
+                if (_products == null)
+                    _products = new GenericRepository<Product>(_db);
 
-                return _pizzaTypes;
+                return _products;
             }
         }
 

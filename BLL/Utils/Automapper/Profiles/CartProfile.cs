@@ -8,8 +8,6 @@ namespace BLL.Utils.Automapper.Profiles
     {
         public CartProfile()
         {
-            CreateMap<Dopping, DoppingDTO>();
-
             CreateMap<User, UserDTO>()
                 .ReverseMap();
 

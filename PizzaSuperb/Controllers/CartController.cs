@@ -38,32 +38,30 @@ namespace PizzaSuperb.Controllers
                     });
                 }
             }
-
-            var doppings = await _bll.CartService.GetDoppings();
-            namesCountPairs = Request.Cookies.ToFilteredPairs(CookieConstants.DoppingPrefix);
-            var doppingViewModels = new List<DoppingOrderViewModel>();
-
-            foreach (var item in doppings)
-            {
-                var targetCookieValue = namesCountPairs.Where(x => x.Key.ToItemName(CookieConstants.DoppingPrefix) == item.Name)
-                                                       .FirstOrDefault()
-                                                       .Value;
-
-                doppingViewModels.Add(new DoppingOrderViewModel()
-                {
-                    PhotoUrl = item.PhotoUrl,
-                    Name = item.Name,
-                    Price = item.Price,
-                    Count = string.IsNullOrEmpty(targetCookieValue) ? 0 : int.Parse(targetCookieValue)
-                });
-            }
+     
+            // var doppings = await _bll.CartService.GetDoppings();
+            // namesCountPairs = Request.Cookies.ToFilteredPairs(CookieConstants.DoppingPrefix);
+            // var doppingViewModels = new List<DoppingOrderViewModel>();
+            //
+            // foreach (var item in doppings)
+            // {
+            //     var targetCookieValue = namesCountPairs.FirstOrDefault(x => x.Key.ToItemName(CookieConstants.DoppingPrefix) == item.Name).Value;
+            //
+            //     doppingViewModels.Add(new DoppingOrderViewModel()
+            //     {
+            //         PhotoUrl = item.PhotoUrl,
+            //         Name = item.Name,
+            //         Price = item.Price,
+            //         Count = string.IsNullOrEmpty(targetCookieValue) ? 0 : int.Parse(targetCookieValue)
+            //     });
+            // }
 
             //var deliveryCookieValue = Request.Cookies.ToFilteredPairs(CookieConstants.ActiveDeliveryPrefix).FirstOrDefault().Value;
             //var hasActiveDeliveries = deliveryCookieValue == null ? false : bool.Parse(deliveryCookieValue);
 
             var model = new OrderViewModel()
             {
-                Doppings = doppingViewModels,
+                //Doppings = doppingViewModels,
                 PizzaTypes = pizzaTypes
                 //HasActiveDeliveries = hasActiveDeliveries
             };
@@ -107,8 +105,7 @@ namespace PizzaSuperb.Controllers
                 return BadRequest();
             }
         }
-
-
+        
         #region Private methods
         private void SetCookieResponse(string cookieName, string cookieValue, int expiredDaysTime)
         {

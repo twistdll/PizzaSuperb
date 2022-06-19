@@ -79,33 +79,33 @@
 
             <div class="separator"></div>
             <div class="doppings-block">
-                @foreach (var dopping in Model.Doppings)
-                {
-                    <div class="dopping-item">
-                        @if (dopping.PhotoUrl == null)
-                        {
-                            <img src="~/img/no-image.png">
-                        }
-                        else
-                        {
-                            <img src="@dopping.PhotoUrl">
-                        }
-                        <div class="text-content">
-                            <span class="dopping-name">@dopping.Name</span>
-                            <div class="price-container">
-                                <span class="price">@dopping.Price</span>
-                                <span>$</span>
-                            </div>
-                        </div>
-                        <div class="add-remove-block">
-                            <div class="btns">
-                                <span class="remove">-</span>
-                                <span class="count" name="@dopping.Name">@dopping.Count</span>
-                                <span class="add">+</span>
-                            </div>
-                        </div>
-                    </div>
-                }
+                @* @foreach (var dopping in Model.Doppings) *@
+                @* { *@
+                @*     <div class="dopping-item"> *@
+                @*         @if (dopping.PhotoUrl == null) *@
+                @*         { *@
+                @*             <img src="~/img/no-image.png"> *@
+                @*         } *@
+                @*         else *@
+                @*         { *@
+                @*             <img src="@dopping.PhotoUrl"> *@
+                @*         } *@
+                @*         <div class="text-content"> *@
+                @*             <span class="dopping-name">@dopping.Name</span> *@
+                @*             <div class="price-container"> *@
+                @*                 <span class="price">@dopping.Price</span> *@
+                @*                 <span>$</span> *@
+                @*             </div> *@
+                @*         </div> *@
+                @*         <div class="add-remove-block"> *@
+                @*             <div class="btns"> *@
+                @*                 <span class="remove">-</span> *@
+                @*                 <span class="count" name="@dopping.Name">@dopping.Count</span> *@
+                @*                 <span class="add">+</span> *@
+                @*             </div> *@
+                @*         </div> *@
+                @*     </div> *@
+                @* } *@
             </div>
             <div class="separator"></div>
             @*       @if (Model.HasActiveDeliveries)

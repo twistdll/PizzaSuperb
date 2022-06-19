@@ -2,6 +2,7 @@
 using BLL.DTO;
 using BLL.Interfaces;
 using DAL.Interfaces;
+using DAL.Enums;
 
 namespace BLL.Services
 {
@@ -19,8 +20,8 @@ namespace BLL.Services
         public async Task<List<PizzaTypeDTO>> GetSaleProducts(string? name = "")
         {           
             var entities = name is null
-                           ? await _uow.PizzaTypes.GetAllAsync(x => x.IsForSale)
-                           : await _uow.PizzaTypes.GetAllAsync(x => x.IsForSale && x.Name.Contains(name));
+                           ? await _uow.Products.GetAllAsync(x => x.IsForSale && x.ProductType == ProductType.Pizza)
+                           : await _uow.Products.GetAllAsync(x => x.IsForSale && x.ProductType == ProductType.Pizza && x.Name.Contains(name));
             
             var dtos = _mapper.Map<List<PizzaTypeDTO>>(entities);
             return dtos;

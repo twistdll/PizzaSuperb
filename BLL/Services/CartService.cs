@@ -41,21 +41,21 @@ namespace BLL.Services
             return true;
         }
 
-        public async Task<List<DoppingDTO>> GetDoppings()
-        {
-            var entities = await _uow.Doppings.GetAllAsync();
-            var dtos = _mapper.Map<List<DoppingDTO>>(entities);
-
-            return dtos;
-        }
+        // public async Task<List<DoppingDTO>> GetDoppings()
+        // {
+        //     var entities = await _uow.Doppings.GetAllAsync();
+        //     var dtos = _mapper.Map<List<DoppingDTO>>(entities);
+        //
+        //     return dtos;
+        // }
 
         //maybe add check for IsForSale flag
         public async Task<string?> GetPhotoByName(string name)
-            => (await _uow.PizzaTypes.GetAsync(x => x.Name == name))?.PhotoUrl;
+            => (await _uow.Products.GetAsync(x => x.Name == name))?.PhotoUrl;
 
         public async Task<double?> GetPriceByName(string name)
         {
-            var product = await _uow.PizzaTypes.GetAsync(x => x.Name == name);
+            var product = await _uow.Products.GetAsync(x => x.Name == name);
             
             if(product?.Discount != null && product?.Price != null)
                 return product.Price * (1 - product.Discount);
